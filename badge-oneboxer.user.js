@@ -7,7 +7,7 @@
 // @match *://chat.meta.stackexchange.com/rooms/*
 // @author The-Quill
 // @grant GM_getResourceText
-// @resource    badges 
+// @resource    badges  https://rawgit.com/The-Quill/badge-oneboxer/master/badges.json
 // @run-at document-end
 // ==/UserScript==
 
