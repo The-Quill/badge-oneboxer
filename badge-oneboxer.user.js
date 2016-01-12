@@ -43,7 +43,6 @@
                 badgeProperties.name + "</span>"
             );
         } while (badgeProperties != false);
-        console.log(node.innerText);
     };
     var SelectBadgeProperties = function(text){
         var regex = /(\[badge:([a-zA-Z\-]+)\])/i;
