@@ -11,18 +11,7 @@
 // @run-at document-end
 // ==/UserScript==
 
-/* Steps:
-
- 1. Correct all existing messages
- 2. Set a mutation observer on the chat feed, check for /(bronze|silver|gold)-badge: ([a-zA-Z]+)/ in message text, if proceeding text is bronze|silver|gold, then match
- 3. Replace HTML on said element
- 
- Use existing tag structure, plus the circle structure from beta sites.
-
-*/
-
     'use strict';
-    //var Badges = JSON.parse(GM_getResourceText("badges"));
     var Badges;
     $.get("https://rawgit.com/The-Quill/badge-oneboxer/master/badges.json", function(data){
         Badges = data;
@@ -47,7 +36,6 @@
     };
     function ReplaceText(node){
         if (!node) return false;
-        console.log(node);
         var badgeProperties = SelectBadgeProperties(node.innerText);
         node.innerHTML = node.innerHTML.replace(
             badgeProperties.total,
