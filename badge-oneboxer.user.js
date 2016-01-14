@@ -39,8 +39,7 @@
         function ReplaceText(node){
             if (!node) return false;
             var badgeProperties = SelectBadgeProperties(node.innerText);
-            if (!badgeProperties) { return false };
-            if (badgeProperties.total == "") return false;
+            if (!badgeProperties || badgeProperties.total == "") return false;
             node.innerHTML = node.innerHTML.replace(
                 badgeProperties.total,
                 "<span class=\"ob-post-tag\" style=\"background-color: #FFF; color: #000; border-color: #000; border-style: solid;\">" +
