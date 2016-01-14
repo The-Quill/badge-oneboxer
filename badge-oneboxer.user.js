@@ -1,11 +1,13 @@
     // ==UserScript==
     // @name Badge Oneboxer
     // @description Converts tag-like badge comments to badges
-    // @version 0.23
+    // @version 0.24
     // @match *://chat.stackexchange.com/rooms/*
     // @match *://chat.stackoverflow.com/rooms/*
     // @match *://chat.meta.stackexchange.com/rooms/*
     // @author The-Quill
+    // @downloadURL  https://raw.githubusercontent.com/The-Quill/badge-oneboxer/master/badge-oneboxer.user.js
+    // @updateURL https://raw.githubusercontent.com/The-Quill/badge-oneboxer/master/badge-oneboxer.user.js
     // @grant GM_getResourceText
     // @resource    badges  https://rawgit.com/The-Quill/badge-oneboxer/master/badges.json
     // @run-at document-end
