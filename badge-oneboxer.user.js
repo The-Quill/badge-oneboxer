@@ -1,7 +1,7 @@
     // ==UserScript==
     // @name Badge Oneboxer
     // @description Converts tag-like badge comments to badges
-    // @version 0.2
+    // @version 0.23
     // @match *://chat.stackexchange.com/rooms/*
     // @match *://chat.stackoverflow.com/rooms/*
     // @match *://chat.meta.stackexchange.com/rooms/*
@@ -28,7 +28,7 @@
                 ReplaceText(messages[i])
             }
         }
-        var regex = /(\[badge:([a-zA-Z\-]+)\])/i;
+        var regex = /(\[badge:([a-zA-Z#.\-]+)\])/i;
         var ColourTransforms = {
             bronze: "CC9966",
             silver: "C5C5C5",
