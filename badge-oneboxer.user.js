@@ -22,47 +22,51 @@
 */
 
     'use strict';
-    var Badges = GM_getResourceText("badges");
-    var SelectChildNode = function(node){
-        return node.children[0].children[2];
-    };
+    //var Badges = JSON.parse(GM_getResourceText("badges"));
+    var Badges;
+    $.get("https://rawgit.com/The-Quill/badge-oneboxer/master/badges.json", function(data){
+        Badges = data;
+    }).done(function(){
+        var m = new MutationObserver(function(){
+           ReplaceAll();
+        });
+        m.observe(document.getElementById("chat"), {childList: true});
+        ReplaceAll();
+    });
+    function ReplaceAll(){
+        var messages = document.getElementsByClassName('message');
+        for (var i = 0, length = messages.length; i < length; i++){
+            ReplaceText(messages[i])
+        }
+    }
+    var regex = /(\[badge:([a-zA-Z\-]+)\])/i;
     var ColourTransforms = {
         bronze: "CC9966",
         silver: "C5C5C5",
         gold: "FFCC00"
     };
-    var ReplaceText = function(node){
+    function ReplaceText(node){
+        if (!node) return false;
+        console.log(node);
         var badgeProperties = SelectBadgeProperties(node.innerText);
-        do {
-            node.innerHTML = node.innerHTML.replace(
-                badgeProperties.total,
-                "<span class=\"ob-post-tag\" style=\"background-color: #FFF; color: #000; border-color: #000; border-style: solid;\">" + 
-                "<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\"><circle fill=\"#" +
-                ColourTransforms[Badges[badgeProperties.name]] +
-                "\" r=\"3\"/></svg>" +
-                badgeProperties.name + "</span>"
-            );
-        } while (badgeProperties != false);
+        node.innerHTML = node.innerHTML.replace(
+            badgeProperties.total,
+            "<span class=\"ob-post-tag\" style=\"background-color: #FFF; color: #000; border-color: #000; border-style: solid;\">" +
+            "<svg version=\"1.1\" height=\"18\" width=\"15\" xmlns=\"http://www.w3.org/2000/svg\"><circle fill=\"#" +
+            ColourTransforms[Badges[badgeProperties.name]] +
+            "\" r=\"3\" cy=\"13.5\" cx=\"3\" /></svg>" +
+            badgeProperties.name + "</span>"
+        );
+        if (HasBadgeText(node.innerText)) ReplaceText(node);
     };
-    var SelectBadgeProperties = function(text){
-        var regex = /(\[badge:([a-zA-Z\-]+)\])/i;
-        if (!regex.test(text)) return false;
+    function HasBadgeText(text){
+        return regex.test(text);
+    }
+    function SelectBadgeProperties(text){
+        if (!HasBadgeText(text)) return false;
         var matchesArray = text.match(regex);
         return {
             total: matchesArray[0],
-            name: matchesArray[1]
+            name:  matchesArray[2]
         };
     }
-    var BadgeOneboxer = function(){};
-    BadgeOneboxer.prototype.Start = function(){
-        var m = new MutationObserver(function(data){
-            console.log(data);
-            for (var i = 0; i < data[0].addedNodes.length; i++){
-                var nodeToChange = SelectChildNode(data[0].addedNodes[i]);
-                ReplaceText(nodeToChange);
-            }
-        });
-        m.observe(document.getElementById("chat"), {childList: true});
-    };
-    var BO = new BadgeOneboxer();
-    BO.Start();
